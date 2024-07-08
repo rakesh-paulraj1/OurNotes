@@ -1,9 +1,10 @@
+"use client";
 import React from 'react'
 
 const Homepage = () => {
   return (
     <div>Homepages
-  <a href="/api/auth/login">Login</a>
+  <a href="/signinpage">Login</a>
     </div>
   )
 }

@@ -1,14 +1,17 @@
-import React from 'react'
-import { getSession } from '@auth0/nextjs-auth0'
-const  Dashboard = async()=>{
-    const session =await getSession();
-    
+'use client';
+
+import Navbar from '@/components/Navbar';
+import { useSession } from 'next-auth/react';
+
+
+export default function Dashboard() {
+const{data:session,status}= useSession();
 
   return (
-    <div>Dashboard 
-        <a href="/api/auth/login">Login</a>
-    </div>
-  )
+     (
+      <div>
+<Navbar name={session?.user.name} email={session?.user?.email} imagesrc={session?.user?.image} />
+      </div>
+    )
+  );
 }
-
-export default Dashboard
