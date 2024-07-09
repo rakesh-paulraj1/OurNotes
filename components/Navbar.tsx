@@ -4,7 +4,7 @@ interface Navbar {
   email: string;
   imagesrc: string;
 }
-import React from 'react'
+import React from 'react';
 import Image from 'next/image';
 
 const Navbar :React.FC<Navbar>= ({name, email, imagesrc}) => {
