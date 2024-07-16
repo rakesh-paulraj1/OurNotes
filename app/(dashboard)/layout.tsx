@@ -13,6 +13,7 @@ export default function Layout({
     <Navbar name={session?.user?.name} email={session?.user?.email} imagesrc={session?.user?.image} />
     <div className="flex h-screen">
         <Sidebar />
+        
         <main className="flex-1 p-4">
             {children}
         </main>

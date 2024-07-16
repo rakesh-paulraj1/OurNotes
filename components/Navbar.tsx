@@ -11,9 +11,12 @@ const Navbar :React.FC<Navbar>= ({name, email, imagesrc}) => {
   return (
    <div>
     <header className="flex h-16 w-full items-center justify-between bg-white px-4 md:px-6 shadow-sm border border-gray-200 dark:border-gray-800">
+    <div className="flex items-center mb-8  h-5 w-5">
+          <span className="text-2xl font-bold text-red-600">Our</span>
+          <span className="text-2xl font-bold">Notes</span>
+        </div>
       <div className="flex items-center gap-4">
-       
-       
+      
       <Image src={imagesrc}  alt="profile"width={800} height={500} className="h-9 w-9 rounded-full object-cover" />
         <div className="grid gap-0.5 text-sm text-gray-900">
           <div className="font-medium">{name}</div>
