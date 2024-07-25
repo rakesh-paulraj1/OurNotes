@@ -14,14 +14,7 @@ const  Homepage =  () => {
   }
   return (<div>
 
-<header className="flex h-16 w-full items-center justify-between bg-black px-4 md:px-6 shadow-sm border border-gray-200 dark:border-gray-800">
 
-<div className="flex justify-between text text-white"> OURNOTES</div>
-<div>   <button className="shadow-[0_4px_14px_0_rgb(0,0,0,10%)] hover:shadow-[0_6px_20px_rgba(93,93,93,23%)] px-8 py-2 bg-[#fff] text-[#696969] rounded-md font-light transition duration-200 ease-linear">
-        Sign In
-      </button>
-      </div>
-</header>
     <LampContainer>
       
       <motion.h1

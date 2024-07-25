@@ -23,7 +23,16 @@ datasource db {
   files   File[]
   user   User @relation(fields: [userId], references: [id])
   userId Int
- }
+  department  Departments   @relation(fields: [departmentId], references: [id])
+  departmentId Int
+}
+model Departments{
+  id Int @id @default (autoincrement())
+  name String
+  subjects Subject[]
+}
+
+
  model File {
   id    Int @id @default(autoincrement())
   subject   Subject @relation(fields: [subjectId], references: [id])
@@ -31,5 +40,7 @@ datasource db {
   department    String
   userid    Int 
  }
+
+
 
 
