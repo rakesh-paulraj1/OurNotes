@@ -12,10 +12,10 @@ const  Homepage =  () => {
   if(session){
     redirect('/yoursubjects');
   }
-  return (<div>
+  return (<div >
 
 
-    <LampContainer>
+    <LampContainer >
       
       <motion.h1
         initial={{ opacity: 0.5, y: 100 }}

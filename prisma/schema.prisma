@@ -36,8 +36,8 @@ model Departments{
  model File {
   id    Int @id @default(autoincrement())
   subject   Subject @relation(fields: [subjectId], references: [id])
+  fileurl String
   subjectId Int
-  department    String
   userid    Int 
  }
 

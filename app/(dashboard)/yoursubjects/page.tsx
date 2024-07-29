@@ -1,13 +1,30 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
-import { UploadButton } from "../../../utils/uploadthing"
+
 import { BentoGrid,BentoGridItem } from '@/components/ui/bento-grid';
 import { motion } from "framer-motion";
 import { ImConfused } from 'react-icons/im';
 import { cn } from '@/utils/cn';
+import { PrismaClient } from '@prisma/client';
+import Cookies from 'js-cookie';
+
+import { useEffect, useState } from 'react';
 export default function Dashboard() {
-const{data:session,status}= useSession();
+  const prisma= new PrismaClient()
+  const [files, setFile] = useState<File | null>(null);
+ 
+ 
+
+ 
+const getsubjects = async () => {
+  const response = await fetch("/api/subject/getusersubject",{method:"GET"});
+  const data = await response.json();
+console.log(data);
+};
+useEffect(() => {
+  getsubjects();
+ 
+});
 const SkeletonThree = () => {
   const variants = {
     initial: {
@@ -33,7 +50,7 @@ const SkeletonThree = () => {
           "linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)",
         backgroundSize: "400% 400%",
       }}
-    >ksjbdf
+    >
       <motion.div className="h-full w-full rounded-lg"></motion.div>
     </motion.div>
   );
@@ -41,7 +58,7 @@ const SkeletonThree = () => {
   return (
      (
       <div>
-<button onClick={()=>signOut()}>signout</button>
+<div className="text text-lg">subjects</div>
 
 <main className="flex min-h-screen flex-col items-center justify-between p-24">
       
@@ -54,7 +71,7 @@ const SkeletonThree = () => {
           description={<span className="text-sm">
             Get AI-powered suggestions based on your writing context.
           </span>}
-          header={<SkeletonThree />}
+          header={<SkeletonThree/>}
           className={cn("[&>p:text-lg]", "md:col-span-1")}
           icon={<ImConfused className="h-4 w-4 text-neutral-500" />}
         />

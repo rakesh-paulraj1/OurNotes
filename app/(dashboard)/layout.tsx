@@ -1,7 +1,7 @@
 "use client"
-import {  useSession } from 'next-auth/react';
+import {  signOut, useSession } from 'next-auth/react';
 import { Sidebar,SidebarBody,SidebarLink } from '@/components/Sibebar';
-import Navbar from "@/components/Navbar";
+
 import { useState } from 'react';
 import {
   IconArrowLeft,
@@ -12,11 +12,19 @@ import {
 import { motion } from "framer-motion";
 import Image from 'next/image';
 import Link from 'next/link';
+
+
 export default function Layout({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
+
+  const handleSignOut = async () => {
+    await signOut();
+    window.location.href = '/';
+  
+  };
   const links = [
     {
       label: "Your Subjects",
@@ -45,7 +53,8 @@ export default function Layout({
       icon: (
         <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
-    },{
+    },
+    {
       label: "Profile",
       href: "/profile",
       icon: (
@@ -53,48 +62,59 @@ export default function Layout({
       ),
     },
   ];
-    const{data:session,status}= useSession();
-    const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
+  const [open, setOpen] = useState(false);
+    
 
-  return ( <div>
-   
-    <div className="flex h-screen">
-    <Sidebar open={open} setOpen={setOpen}animate={false}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-col flex-1 overflow-y-auto">
-             <Logo /> 
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
-              ))}
+  return (
+    <div>
+      <div className="flex h-screen">
+        <Sidebar open={open} setOpen={setOpen} animate={false}>
+          <SidebarBody className="justify-between gap-10">
+            <div className="flex flex-col flex-1 overflow-y-auto">
+              <Logo />
+              <div className="mt-8 flex flex-col gap-2">
+                {links.map((link, idx) => (
+                  <SidebarLink key={idx} link={link} />
+                ))}
+              </div>
+              <div  className='mt-2'>
+                <button onClick={(handleSignOut)}>
+           <div className='flex items-center justify-start gap-2  group/sidebar py-2'>
+           <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+           <div className=' text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0'>
+            Sign out
+           </div>
+           </div>
+           
+                </button>
+              </div>
             </div>
-          </div>
-          <div>
-            <SidebarLink
-              link={{
-                label: "Manu Arora",
-                href: "#",
-                icon: (
-                  <Image
-                    src="https://assets.aceternity.com/manu.png"
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            />
-          </div>
-        </SidebarBody>
-      </Sidebar>
+            <div>
+              <SidebarLink
+                link={{
+                  label: session?.user?.name ?? "",
+                  href: "/profile",
+                  icon: (
+                    <Image
+                      src={session?.user?.image ?? ""}
+                      className="h-7 w-7 flex-shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    />
+                  ),
+                }}
+              />
+            </div>
+          </SidebarBody>
+        </Sidebar>
         
         <main className="flex-1 p-4">
-            {children}
+          {children}
         </main>
+      </div>
     </div>
-</div>
-    
   );
 }
 export const LogoIcon = () => {
