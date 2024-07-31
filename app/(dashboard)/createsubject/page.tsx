@@ -9,7 +9,7 @@ const Createsubjects = () => {
   const [subjectname, setSubjectname] = useState<string>('');
   const [department, setDepartment] = useState<string>('');
   const [uploading, setUploading] = useState<boolean>(false);
-
+ const[filename,setFilename]=useState<string>('');
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       setFile(e.target.files[0]);
@@ -24,6 +24,7 @@ const Createsubjects = () => {
     setUploading(true);
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('filename',filename);
     formData.append('subjectname', subjectname);
     formData.append('department', department);
    
@@ -59,6 +60,7 @@ const Createsubjects = () => {
             onChange={(e) => setSubjectname(e.target.value)}
           />
         </LabelInputContainer>
+        
         <LabelInputContainer className="mb-4">
           <Label htmlFor="department">Subject Department</Label>
           <select
@@ -82,7 +84,16 @@ const Createsubjects = () => {
             <option value="4">Bio Technology</option>
           </select>
         </LabelInputContainer>
-
+        <LabelInputContainer className='mb-4'>
+          <Label htmlFor="filename">File name</Label>
+          <Input
+            id="filename"
+            placeholder="eg: Unit1.pdf"
+            type="text"
+            value={filename}
+            onChange={(e) => setFilename(e.target.value)}
+          />
+        </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="file">Initial File</Label>
           <Input

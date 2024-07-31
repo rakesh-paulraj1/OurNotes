@@ -8,6 +8,10 @@ export async function GET(request: NextRequest) {
     where: {
       userId: Number(userid),
     },
+    include:{
+      user:true,
+      department:true
+    }
   });
   
   return NextResponse.json({subject});

@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
     const file = formData.get("file");
     const subjectname = formData.get("subjectname");
     const departmentId = formData.get("department");
+    const filename = formData.get("filename");
   
     if (!file) {  
       return NextResponse.json({ error: "File is required." }, { status: 400 });
@@ -63,6 +64,7 @@ export async function POST(request: NextRequest) {
       
       await prisma.file.create({
           data: {
+              filename:filename?.toString()?? "",
               fileurl: fileUrl,
               subjectId: subject.id,
               userid:Number(userid)
