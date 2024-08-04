@@ -1,32 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { Prisma, PrismaClient } from "@prisma/client";
 
-
+import {  PrismaClient } from "@prisma/client";
+import S3 from "aws-sdk/clients/s3";
+import { randomUUID } from 'crypto';
 const prisma= new PrismaClient()
-const s3Client = new S3Client({
+
+export const s3client = new S3({
+  apiVersion:"2006-03-01",
   region: process.env.AWS_S3_REGION ?? "",
-  credentials: {
     accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID ?? "",
     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY ?? "",
-  },
+    signatureVersion:'v4'
+  
 });
 
-async function uploadFileToS3(file: Buffer, fileName: string) {
-  const fileBuffer = file;
- 
-  const params = {
-    Bucket: process.env.AWS_S3_BUCKET_NAME,
-    Key: `${fileName}`,
-    Body: fileBuffer,
-    ContentType: "pdf",
-  };
-  
-  const fileurl = `https://ournotes-rakesh.s3.amazonaws.com/${fileName}`;
-  const command = new PutObjectCommand(params);
-  await s3Client.send(command);
-  return fileurl;
-}
 
 
 export async function POST(request: NextRequest) {
@@ -37,14 +24,13 @@ export async function POST(request: NextRequest) {
     const file = formData.get("file");
     const subjectname = formData.get("subjectname");
     const departmentId = formData.get("department");
-    const filename = formData.get("filename");
-  
+    
     if (!file) {  
       return NextResponse.json({ error: "File is required." }, { status: 400 });
     }
 
     if (!(file instanceof File)) {
-      return NextResponse.json(
+      return NextResponse.json( 
         { error: "Invalid file format." },
         { status: 400 }
       );
@@ -57,26 +43,35 @@ export async function POST(request: NextRequest) {
         departmentId: Number(departmentId),
       },
     });
-   if (file && file instanceof File) {
-      const buffer = Buffer.from(await file.arrayBuffer());
-      const fileUrl = await uploadFileToS3(buffer, file.name);
 
+    let uploadUrl;
+    let key;
+
+    if (file && file instanceof File) {
+      const fileType = file.type; 
       
+      const ex = (fileType as string).split("/")[1];
+      key = `${randomUUID()}.${ex}`;
+      const params = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: key,
+        Expires: 60,
+        ContentType: `pdf`
+      };
+     
+      uploadUrl = await s3client.getSignedUrl("putObject", params);
+
       await prisma.file.create({
-          data: {
-              filename:filename?.toString()?? "",
-              fileurl: fileUrl,
-              subjectId: subject.id,
-              userid:Number(userid)
-          },
+        data: {
+          filename: file.name,
+          fileurl: key,
+          subjectId: subject.id,
+          userid: Number(userid)
+        },
       });
-  }
-
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileurl = await uploadFileToS3(buffer, file.name);
-
-    return NextResponse.json({ success: true, fileurl });
+    }
+     
+    return NextResponse.json({ uploadUrl, key });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ error: "total error" + error });
