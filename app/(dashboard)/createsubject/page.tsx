@@ -41,9 +41,7 @@ const Createsubjects = () => {
       await fetch(uploadUrl,{method:"PUT",body:File})
       setUploading(false);
     } catch (error) {
-      
       setUploading(false);
-  
     }
   };
 

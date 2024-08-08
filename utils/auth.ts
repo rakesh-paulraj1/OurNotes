@@ -1,6 +1,8 @@
 import GoogleProvider  from 'next-auth/providers/google';
 import { PrismaClient } from '@prisma/client'
+
 import { setCookie } from './setcookie';
+
 const prisma=new PrismaClient();
 export const authentication={
     providers: [
@@ -34,7 +36,12 @@ export const authentication={
             })
             if(existinguser){
            
-            setCookie('userId', existinguser.id.toString());
+             await setCookie('userId', existinguser.id.toString());
+            if (typeof window !== 'undefined') {
+              
+              localStorage.setItem('userId', existinguser.id.toString());
+            }
+           
           }
 
             if (!existinguser) {
@@ -46,7 +53,12 @@ export const authentication={
                   }
                 });
 
-                setCookie('userId', newuser.id.toString());
+                 await setCookie('userId', newuser.id.toString());
+                if (typeof window !== 'undefined') {
+              
+                  localStorage.setItem('userId', newuser.id.toString());
+                }
+                
               } catch(e) {
                 console.log(e + " this is the error");
               }  

@@ -5,7 +5,6 @@ export function setCookie(name:string, value:string, options = {}) {
   const cookieStore = cookies();
   cookieStore.set(name, value, {
     path: '/',
-    httpOnly: true,
     sameSite: 'lax',
     ...options,
   });

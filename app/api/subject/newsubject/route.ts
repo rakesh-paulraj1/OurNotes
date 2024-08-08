@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-
 import {  PrismaClient } from "@prisma/client";
 import S3 from "aws-sdk/clients/s3";
 import { randomUUID } from 'crypto';
@@ -29,6 +28,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "File is required." }, { status: 400 });
     }
 
+  
     if (!(file instanceof File)) {
       return NextResponse.json( 
         { error: "Invalid file format." },

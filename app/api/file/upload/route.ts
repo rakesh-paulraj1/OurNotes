@@ -1,31 +1,43 @@
-import S3 from "aws-sdk/clients/s3";
-import { NextApiRequest, NextApiResponse } from "next";
+import { s3client } from "../../subject/newsubject/route";
+import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
+import { PrismaClient } from "@prisma/client";
 
-const s3Client = new S3({
-    apiVersion:"2006-03-01",
-    region: process.env.AWS_S3_REGION ?? "",
-      accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID ?? "",
-      secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY ?? "",
-      signatureVersion:'v4'
-    
-  });
+export default async function POST(req: NextRequest) {
+    try {
+        const formData = await req.formData();
+        const prisma = new PrismaClient();
+        const file = formData.get("file");
+        const userid = Number(formData.get("userid"));
+        const subjectid = Number(formData.get("subjectid"));
+        const ex = (req.nextUrl.searchParams.get("fileType") as string).split("/")[1];
+        const key = `${randomUUID()}.${ex}`;
 
-export default  async function handler(req:NextApiRequest,res:NextApiResponse){
-    
-    const ex =(req.query.fileType as string).split("/")[1];
-    const key=`${randomUUID()}.${ex}`
-const params={
-    Bucket: process.env.AWS_S3_BUCKET_NAME,
-    key,
-    Expires:60,
-    ContentType:`pdf`
-}   
-const uploadUrl = await s3Client.getSignedUrl("putObject",params);
+        if (file && file instanceof File) {
+            const params = {
+                Bucket: process.env.AWS_S3_BUCKET_NAME,
+                Key: key,
+                Expires: 60,
+                ContentType: `pdf`
+            };
+            const uploadUrl = await s3client.getSignedUrl("putObject", params);
 
-res.status(200).json({
-uploadUrl,
-Key:key
-});
-
+            await prisma.file.create({
+                data: {
+                    filename: file.name,
+                    fileurl: key,
+                    userid: userid,
+                    subjectId: subjectid,
+                }
+            })
+            return NextResponse.json({
+                uploadUrl,
+                Key: key
+            }, { status: 200 });
+        }
+        return NextResponse.json({ error: "No file found." }, { status: 400 });
+    } catch (e) {
+        console.log(e);
+        return NextResponse.json({ error: "Something went wrong." }, { status: 500 });
+    }
 }

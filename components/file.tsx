@@ -1,18 +1,27 @@
 "use client"
-import React from 'react';
-
+import { useState } from 'react';
+import React from 'react'
+import Cookie from 'js-cookie';
+import { useEffect } from 'react';
 interface FileProps {
   filename: string;
   filekey: string;
+  fileuserid:Number;
+  fileid:Number;
+  subjectid:Number
 }
 
-const File: React.FC<FileProps> = ({ filename, filekey }) => {
+const File: React.FC<FileProps> = ({ filename, filekey,fileuserid,fileid,subjectid }) => {
   
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+    const userid = Cookie.get('userId');
+   
   const handleDownload = async () => {
     try {
       const response = await fetch('/api/file/download/', {
         method: 'POST',
-        headers: {
+        headers: { 
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ fileurl: filekey }),
@@ -32,6 +41,30 @@ const File: React.FC<FileProps> = ({ filename, filekey }) => {
       console.error('Download failed:', error);
     }
   };
+  const handleDelete = async (fileid:Number,) => {
+    if (confirm('Are you sure you want to delete this file?')) {
+      setIsDeleting(true);
+      try {
+        const response = await fetch(`/api/file/delete`, { method: 'DELETE',body:JSON.stringify({
+          fileKey: filekey,
+          fileId:fileid
+        })});
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data =await response.json();
+        console.log(data)
+        const {deleteurl}=data;
+        console.log(deleteurl);
+        await fetch(deleteurl,{method:"DELETE"})
+        alert('File deleted successfully');
+      } catch (error) {
+        console.error('Delete failed:', error);
+        alert('Failed to delete the file');
+      } finally {
+        setIsDeleting(false);
+      }
+    }
+  };
+  const showDeleteButton = fileuserid === Number(userid);
 
   return (
     <div className="bg-background p-6 rounded-lg shadow-lg">
@@ -46,6 +79,16 @@ const File: React.FC<FileProps> = ({ filename, filekey }) => {
         <button onClick={handleDownload} className='sm'>
           Download
         </button>
+        {showDeleteButton && (
+          <button 
+            onClick={()=>handleDelete((Number(userid)))} 
+            className='ml-4 text-red-600 hover:text-red-800'
+            disabled={isDeleting}
+          >
+            {isDeleting ? 'Deleting...' : 'Delete'} hello
+          </button>
+        )}
+
       </div>
     </div>
   );
