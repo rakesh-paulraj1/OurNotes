@@ -34,7 +34,7 @@ export default function Dashboard() {
   return (
     
     <div>
-      <div className="text text-lg">subjects</div>
+      <div className="text-lg font-bold"> Your Subjects</div>
 
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { PrismaClient } from "@prisma/client";
-
+import {redis} from "@/lib/redis";    
 const s3client = new S3Client({
     region: process.env.AWS_S3_REGION || '',
     credentials: {
@@ -14,6 +14,7 @@ const s3client = new S3Client({
 export async function DELETE(request: NextRequest) {
     try {
         const body = await request.json();
+        console.log(body);
         const fileid = body.fileId;
         const filekey = body.fileKey;
         const subjectid=body.subjectId;
@@ -40,6 +41,8 @@ export async function DELETE(request: NextRequest) {
         });
 
         if (subject) {
+            const cacheKey = 'allsubjects';
+    await redis.del(cacheKey);
             return NextResponse.json({ data: subject });
         } else {
             throw new Error('Failed to delete record from database');

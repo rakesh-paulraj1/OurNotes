@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/utils/cn";
+import {cn} from '../utils/cn';
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";

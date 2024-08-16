@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {  PrismaClient } from "@prisma/client";
 import S3 from "aws-sdk/clients/s3";
+import {redis} from '@/lib/redis';
 import { randomUUID } from 'crypto';
 const prisma= new PrismaClient()
 
@@ -70,6 +71,9 @@ export async function POST(request: NextRequest) {
         },
       });
     }
+    const cacheKey = 'allsubjects';
+    await redis.del(cacheKey);
+
      
     return NextResponse.json({ uploadUrl, key });
   } catch (error) {

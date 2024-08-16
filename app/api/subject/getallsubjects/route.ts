@@ -1,8 +1,14 @@
+import {redis} from '@/lib/redis';
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET() {
-
   const prisma = new PrismaClient();
+  const cacheKey='allsubjects';
+  const cachedSubjects=await redis.get(cacheKey);
+  if(cachedSubjects){
+   
+    return NextResponse.json({subject:JSON.parse(cachedSubjects)});
+  }
   const subject = await prisma.subject.findMany(
     {
         include:{
@@ -11,7 +17,9 @@ export async function GET() {
           }
     }
   );
-  console.log(subject);
+  await redis.set(cacheKey,JSON.stringify(subject)
+  );
+
   
   return NextResponse.json({subject});
 }  

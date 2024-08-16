@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import Link from 'next/link';
 import File from "@/components/file";
 import { cookies } from 'next/headers'
+import React, { useEffect } from "react";
+
 const prisma = new PrismaClient();
 
  async function getfiles(id:string){
@@ -14,6 +16,8 @@ const prisma = new PrismaClient();
       subject: true,
     },
   })
+ 
+
   return files;
 };
 
@@ -22,6 +26,7 @@ export default async function Filepage({params}: { params: { id: string } }) {
   const files = await getfiles(params.id);
   const cookieStore = cookies()
   const id = params.id;
+
  const userid=cookieStore.get('userId')
 const fileuserid=files[0].userid;
   if (!id) {
@@ -42,7 +47,6 @@ const fileuserid=files[0].userid;
         <div className="absolute bottom-6 right-6 flex items-center space-x-2">
        <Link href={`/files/newfile/${id}`}>
         <label  className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer shadow-md hover:bg-gray-1000">
-        <PlusIcon className="h-4 w-4 text-muted-foreground" />
             Upload File
         </label>
         </Link>
@@ -53,23 +57,4 @@ const fileuserid=files[0].userid;
       
     </div>
   ); 
-}
-function PlusIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 12h14" />
-      <path d="M12 5v14" />
-    </svg>
-  )
 }

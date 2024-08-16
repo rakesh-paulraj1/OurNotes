@@ -2,10 +2,12 @@
 import Cookie from 'js-cookie';
 import { cn } from '@/utils/cn';
 import { Label } from '@/components/ui/label';
+import { useRouter } from "next/navigation";
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-const Fileupload=({params}:{params:{subjectid:string}})=>{
-const subjectid=params.subjectid;
+const Fileupload=({params}:{params:{id:string}})=>{
+const subjectid=params.id;
+const router = useRouter();
 const userid = Cookie.get('userId');
 const [uploading, setUploading] = useState<boolean>(false);
 const [file,setFile]=useState<File | null>(null);
@@ -19,6 +21,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('subjectid', subjectid);
+        console.log(subjectid);
         formData.append('userid', userid || '');
         try{
             const response =await fetch("/api/file/upload",{method:"POST",body:formData});
@@ -28,6 +31,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             const File= formData.get("file")
             await fetch(uploadUrl,{method:"PUT",body:File});
             setUploading(false);
+            router.push(`/files/${subjectid}`);
             }catch(error){
             setUploading(false);
             }
@@ -38,6 +42,7 @@ return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
        Upload File
+      
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
         *Note the file should not exceed 4MB you can resize the file here

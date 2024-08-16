@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import React from 'react'
 import Cookie from 'js-cookie';
-import { useEffect } from 'react';
 interface FileProps {
   filename: string;
   filekey: string;
@@ -47,19 +46,24 @@ const File: React.FC<FileProps> = ({ filename, filekey,fileuserid,fileid,subject
       try {
         const response = await fetch(`/api/file/delete`, { method: 'DELETE',body:JSON.stringify({
           fileKey: filekey,
-          fileId:fileid
+          fileId:fileid,
+          subjectId:subjectid
         })});
+        console.log(  filekey,
+          fileid,
+          subjectid)
         if (!response.ok) throw new Error('Network response was not ok');
         const data =await response.json();
         console.log(data)
         const {deleteurl}=data;
-        console.log(deleteurl);
+       
         await fetch(deleteurl,{method:"DELETE"})
         alert('File deleted successfully');
       } catch (error) {
         console.error('Delete failed:', error);
         alert('Failed to delete the file');
       } finally {
+        window.location.reload();
         setIsDeleting(false);
       }
     }
@@ -81,11 +85,11 @@ const File: React.FC<FileProps> = ({ filename, filekey,fileuserid,fileid,subject
         </button>
         {showDeleteButton && (
           <button 
-            onClick={()=>handleDelete((Number(userid)))} 
+            onClick={()=>handleDelete((Number(fileid)))} 
             className='ml-4 text-red-600 hover:text-red-800'
             disabled={isDeleting}
           >
-            {isDeleting ? 'Deleting...' : 'Delete'} hello
+            {isDeleting ? 'Deleting...' : 'Delete'} 
           </button>
         )}
 

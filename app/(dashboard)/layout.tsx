@@ -3,16 +3,18 @@ import {  signOut, useSession } from 'next-auth/react';
 import { Sidebar,SidebarBody,SidebarLink } from '@/components/Sibebar';
 
 import { useState } from 'react';
-import {
+import {IconSearch,
+  IconFile,
+  IconFilePencil,
   IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
+ IconFileTextAi,
+  IconUser
+
 } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import Image from 'next/image';
 import Link from 'next/link';
-
+import {cn} from '../../utils/cn';
 
 export default function Layout({
   children,
@@ -30,35 +32,35 @@ export default function Layout({
       label: "Your Subjects",
       href: "/yoursubjects",
       icon: (
-        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <IconFile className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Create Subject",
       href: "/createsubject",
       icon: (
-        <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <IconFilePencil className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Explore Subjects",
       href: "/explore",
       icon: (
-        <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <IconSearch className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Chat with Pdf",
       href: "/chatwithpdf",
       icon: (
-        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <IconFileTextAi className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Profile",
       href: "/profile",
       icon: (
-        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <IconUser className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
   ];
@@ -67,9 +69,13 @@ export default function Layout({
     
 
   return (
-    <div>
-      <div className="flex h-screen">
-        <Sidebar open={open} setOpen={setOpen} animate={false}>
+   
+    <div className={cn(
+      "rounded-md flex flex-col md:flex-row w-full flex-1 max-w-[120rem] mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+      "h-screen" 
+    )} >
+
+        <Sidebar open={open} setOpen={setOpen} >
           <SidebarBody className="justify-between gap-10">
             <div className="flex flex-col flex-1 overflow-y-auto">
               <Logo />
@@ -107,14 +113,20 @@ export default function Layout({
                 }}
               />
             </div>
+           
           </SidebarBody>
+          
         </Sidebar>
+        <main
+      className={`flex-1 p-4 transition-all duration-300 ${
+        open ? 'ml-[300px]' : 'ml-0'
+      }`}
+    >
+      {children}
+    </main>
         
-        <main className="flex-1 p-4">
-          {children}
-        </main>
       </div>
-    </div>
+    
   );
 }
 export const LogoIcon = () => {

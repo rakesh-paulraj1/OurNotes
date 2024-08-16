@@ -2,7 +2,8 @@ import React from 'react'
 
 const chatwithpdf = () => {
   return (
-    <div>chatwithpdf
+    <div className="text-lg font-bold">chatwithpdf.. will be comming soon
+  
     
     </div>
   )
