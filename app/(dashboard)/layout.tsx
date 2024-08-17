@@ -5,7 +5,7 @@ interface LayoutProps {
 import React from 'react';
 import {  signOut, useSession } from 'next-auth/react';
 import { Sidebar,SidebarBody,SidebarLink } from '@/components/Sibebar';
-
+export const runtime ='edge';
 import { useState } from 'react';
 import {IconSearch,
   IconFile,

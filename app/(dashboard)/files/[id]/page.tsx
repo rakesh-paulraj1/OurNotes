@@ -3,7 +3,7 @@ import Link from 'next/link';
 import File from "@/components/file";
 import { cookies } from 'next/headers'
 import React, { useEffect } from "react";
-
+export const runtime ='edge';
 const prisma = new PrismaClient();
 
  async function getfiles(id:string){
