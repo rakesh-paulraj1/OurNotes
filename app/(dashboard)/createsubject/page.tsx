@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/utils/cn';
 import axios from 'axios';
-export const runtime ='edge';
+
 const Createsubjects = () => {
   const [file, setFile] = useState<File | null>(null);
   const [subjectname, setSubjectname] = useState<string>('');

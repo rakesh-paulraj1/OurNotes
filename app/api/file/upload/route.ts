@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import {redis} from '@/lib/redis';
 
 const prisma = new PrismaClient();
-export const runtime ='edge';
+
 export async function POST(req: NextRequest) {
     try {
         

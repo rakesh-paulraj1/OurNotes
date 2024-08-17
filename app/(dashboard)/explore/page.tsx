@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineClass } from "react-icons/md";
 import Link from 'next/link';
-export const runtime ='edge';
+
 import { useEffect,useState } from "react";
 export default function Allsubjects(){
   const [subjects,setSubjects]=useState<any[]>([]);

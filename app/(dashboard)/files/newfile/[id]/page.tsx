@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { useRouter } from "next/navigation";
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-export const runtime ='edge';
+
 const Fileupload=({params}:{params:{id:string}})=>{
 const subjectid=params.id;
 const router = useRouter();

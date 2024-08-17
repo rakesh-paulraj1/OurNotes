@@ -8,7 +8,7 @@ import { MdOutlineClass } from "react-icons/md";
 import { cn } from '@/utils/cn';
 import {useEffect,  useState } from 'react';
 import Link from 'next/link';
-export const runtime ='edge';
+
 export default function Dashboard() {
   const [subjects, setSubjects] = useState<any[]>([]);
 

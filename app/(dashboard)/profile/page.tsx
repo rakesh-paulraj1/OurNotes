@@ -18,7 +18,7 @@ import { useState,useEffect } from 'react';
 import { BentoGrid,BentoGridItem } from '@/components/ui/bento-grid';
 import { useSession } from 'next-auth/react'
 import { motion } from "framer-motion";
-export const runtime ='edge';
+
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineClass } from "react-icons/md";
 const Profile = () => {

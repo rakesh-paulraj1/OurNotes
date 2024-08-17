@@ -4,7 +4,7 @@ import { s3client } from "@/utils/utils";
 import {redis} from '@/lib/redis';
 import { randomUUID } from 'crypto';
 const prisma= new PrismaClient()
-export const runtime ='edge';
+
 
 
 
