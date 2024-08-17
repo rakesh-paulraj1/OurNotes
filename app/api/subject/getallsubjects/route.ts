@@ -1,6 +1,7 @@
 import {redis} from '@/lib/redis';
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+export const runtime ='edge';
 export async function GET() {
   const prisma = new PrismaClient();
   const cacheKey='allsubjects';

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import {redis} from '@/lib/redis';
 import { NextRequest, NextResponse } from "next/server";
-
+export const runtime ='edge';
 export async function GET(request: NextRequest) {
   const cookies = request.cookies;
   

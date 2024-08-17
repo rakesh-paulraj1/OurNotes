@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { s3client } from "@/utils/utils";
 
-
+export const runtime ='edge';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
