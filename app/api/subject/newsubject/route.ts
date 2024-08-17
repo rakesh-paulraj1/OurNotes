@@ -1,18 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import {  PrismaClient } from "@prisma/client";
-import S3 from "aws-sdk/clients/s3";
+import { s3client } from "@/utils/utils";
 import {redis} from '@/lib/redis';
 import { randomUUID } from 'crypto';
 const prisma= new PrismaClient()
 
-export const s3client = new S3({
-  apiVersion:"2006-03-01",
-  region: process.env.AWS_S3_REGION ?? "",
-    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID ?? "",
-    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY ?? "",
-    signatureVersion:'v4'
-  
-});
+
 
 
 

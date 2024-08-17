@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { s3client } from "@/app/api/subject/newsubject/route";
+import { s3client } from "@/utils/utils";
 
 
 export async function POST(request: NextRequest) {

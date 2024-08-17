@@ -1,4 +1,4 @@
-import { s3client } from "../../subject/newsubject/route";
+import { s3client } from "@/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 import { PrismaClient } from "@prisma/client";
