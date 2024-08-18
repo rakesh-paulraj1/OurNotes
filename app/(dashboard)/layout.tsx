@@ -87,7 +87,12 @@ export default function Layout({
       href="#"
       className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
-      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+        <div className="h-8 w-8 bg-gray-500 text-white flex items-center justify-center rounded-full">
+        <span className="font-bold text-lg">
+        <span className="text-white">O</span>
+        <span className="text-red-300">N</span>
+        </span>
+      </div>
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

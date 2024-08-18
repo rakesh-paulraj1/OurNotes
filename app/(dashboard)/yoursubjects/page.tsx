@@ -4,24 +4,24 @@ import { motion } from "framer-motion";
 
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineClass } from "react-icons/md";
-
+import { useSession } from 'next-auth/react';
 import { cn } from '@/utils/cn';
 import {useEffect,  useState } from 'react';
 import Link from 'next/link';
 
 export default function Dashboard() {
   const [subjects, setSubjects] = useState<any[]>([]);
-
+  const { data: session, status } = useSession();
   const getsubjects = async () => {
     const response = await fetch("/api/subject/getusersubject", { method: "GET" });
     const data = await response.json();
-    console.log(data.subject);
+  
     setSubjects(data.subject);
   };
 
   useEffect(() => {
     getsubjects();
-  }, []);
+  }, [session]);
 
   const variants = {
     initial: {
@@ -39,7 +39,7 @@ export default function Dashboard() {
 
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-          {subjects && subjects.map(subject => (
+          {subjects &&subjects.length > 0 ?( subjects.map(subject => (
             <div key={subject.id} className="col-span-1 md:col-span-1">
               <Link href={`/files/${subject.id}`}>
               <BentoGrid className="max-w-4xl w-full md:auto-rows-[20rem]">
@@ -71,7 +71,14 @@ export default function Dashboard() {
               </BentoGrid>
               </Link>
             </div>
-          ))}
+          ))):(<div className="flex flex-col items-center p-4">
+            <p className="text-gray-600 mb-4">No subjects available.</p>
+            <Link href="/add-subject">
+              <div className="px-6 py-2 bg-black text-white rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
+                Create New Subject
+              </div>
+            </Link>
+          </div>)}
         </div>
       </main>
     </div>

@@ -5,10 +5,11 @@ import { cn } from '@/utils/cn';
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineClass } from "react-icons/md";
 import Link from 'next/link';
-
+import { useSession } from 'next-auth/react';
 import { useEffect,useState } from "react";
 export default function Allsubjects(){
   const [subjects,setSubjects]=useState<any[]>([]);
+  const { data: session, status } = useSession();
   const getallsubjects = async () => {
     const response = await fetch("api/subject/getallsubjects", { method: "GET" });
     const data = await response.json();
@@ -16,7 +17,7 @@ export default function Allsubjects(){
   }
   useEffect(()=>{
     getallsubjects();
-  },[]);
+  },[session]);
  
   const variants = {
     initial: {

@@ -4,8 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const cookies = request.cookies;
-  
-
   const userid = cookies.get('userId')?.value;
   const prisma = new PrismaClient();
   const cacheKey=`allsubjects:${userid}`;

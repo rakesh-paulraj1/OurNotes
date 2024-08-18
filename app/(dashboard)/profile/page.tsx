@@ -27,7 +27,6 @@ const Profile = () => {
   const getsubjects = async () => {
     const response = await fetch("/api/subject/getusersubject", { method: "GET" });
     const data = await response.json();
-   console.log(session);
 
     setSubjects(data.subject);
   };

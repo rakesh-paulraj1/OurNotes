@@ -32,9 +32,6 @@ const  Homepage =  () => {
       </motion.h1>
      
     </LampContainer>
-  
-   
-    
   </div>
   
   )
