@@ -36,11 +36,12 @@ const fileuserid=files[0].userid;
   const showuploadbutton=Number(fileuserid)===Number(userid?.value);
   return (
     <div>
-      
+  <div className="w-full max-w-4xl h-[80vh] overflow-auto">
       {files && files.map(file=>(<div key={file.id}>
         <File filename={file.filename} filekey={file.fileurl} fileuserid={file.userid} fileid={file.id} subjectid={file.subjectId}  />
         </div>
       ))}
+      </div>
       {showuploadbutton && (
         <div>
       
