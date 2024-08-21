@@ -35,8 +35,9 @@ export default function Allsubjects(){
   ALL SUBJECTS
 </div>
 
-
+<div className="w-full max-w-4xl h-[80vh] overflow-auto">
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+   
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
         {subjects && subjects.map(subject => (
           <div key={subject.id} className="col-span-1 md:col-span-1">
@@ -72,7 +73,9 @@ export default function Allsubjects(){
           </div>
         ))}
       </div>
+     
     </main>
+    </div>
   </div>
   )
 

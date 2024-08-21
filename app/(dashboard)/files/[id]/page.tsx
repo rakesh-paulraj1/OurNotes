@@ -36,7 +36,7 @@ const fileuserid=files[0].userid;
   const showuploadbutton=Number(fileuserid)===Number(userid?.value);
   return (
     <div>
-      <h1> Subjects {id}</h1>
+      
       {files && files.map(file=>(<div key={file.id}>
         <File filename={file.filename} filekey={file.fileurl} fileuserid={file.userid} fileid={file.id} subjectid={file.subjectId}  />
         </div>

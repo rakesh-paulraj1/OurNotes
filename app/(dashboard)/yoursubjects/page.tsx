@@ -36,7 +36,7 @@ export default function Dashboard() {
     
     <div>
       <div className="text-lg font-bold"> Your Subjects</div>
-
+      <div className="w-full max-w-4xl h-[80vh] overflow-auto">
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
           {subjects &&subjects.length > 0 ?( subjects.map(subject => (
@@ -81,6 +81,7 @@ export default function Dashboard() {
           </div>)}
         </div>
       </main>
+      </div>
     </div>
   );
 }

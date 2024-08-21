@@ -64,6 +64,7 @@ const Profile = () => {
       </div>
     </div>
   </div>
+  <div className="w-full max-w-4xl h-[80vh] overflow-auto">
   <div className="w-full md:w-2/3 mt-4 md:mt-0">
     {subjects && subjects.length > 0 ? (
       subjects.map((subject: Subject) => (
@@ -119,6 +120,7 @@ const Profile = () => {
         </Link>
       </div>
     )}
+  </div>
   </div>
 </div>
 </div>
