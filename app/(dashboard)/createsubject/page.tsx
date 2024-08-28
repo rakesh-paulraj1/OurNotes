@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/utils/cn';
 import axios from 'axios';
+import { Toaster,toast } from 'sonner';
 
 const Createsubjects = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -28,7 +29,7 @@ const Createsubjects = () => {
   
     formData.append('subjectname', subjectname);
     formData.append('department', department);
- 
+  const loadingtoast=toast.loading('Creating the subject...')
     try {
       const response = await fetch("/api/subject/newsubject", { method: "POST", body: formData });
       if (!response.ok) throw new Error('Network response was not ok');
@@ -41,8 +42,12 @@ const Createsubjects = () => {
       },});
       await fetch(uploadUrl,{method:"PUT",body:File})
       setUploading(false);
+      toast.success('Subject created  successfully');
     } catch (error) {
       setUploading(false);
+      toast.error('Error Creating Subject');
+    }finally{
+      toast.dismiss(loadingtoast)
     }
   };
 
@@ -108,6 +113,7 @@ const Createsubjects = () => {
           <BottomGradient />
         </button>
       </form>
+      <Toaster position="top-center"richColors />
     </div>
   );
 };

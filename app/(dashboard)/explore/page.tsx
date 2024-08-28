@@ -7,9 +7,13 @@ import { MdOutlineClass } from "react-icons/md";
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useEffect,useState } from "react";
+import { Toaster,toast } from 'sonner';
 export default function Allsubjects(){
   const [subjects,setSubjects]=useState<any[]>([]);
   const { data: session, status } = useSession();
+ if(status=="authenticated"){
+  toast.success('Logged in successfully');
+ }
   const getallsubjects = async () => {
     const response = await fetch("api/subject/getallsubjects", { method: "GET" });
     const data = await response.json();
@@ -18,6 +22,7 @@ export default function Allsubjects(){
   useEffect(()=>{
     getallsubjects();
   },[session]);
+ 
  
   const variants = {
     initial: {
@@ -73,8 +78,9 @@ export default function Allsubjects(){
           </div>
         ))}
       </div>
-     
+      <Toaster position="top-center"richColors />
     </main>
+    
     </div>
   </div>
   )

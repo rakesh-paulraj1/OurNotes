@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { useRouter } from "next/navigation";
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-
+import { Toaster,toast } from 'sonner';
 const Fileupload=({params}:{params:{id:string}})=>{
 const subjectid=params.id;
 const router = useRouter();
@@ -24,6 +24,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         formData.append('subjectid', subjectid);
         console.log(subjectid);
         formData.append('userid', userid || '');
+        const uploadtoast=toast.loading('Uploading the file...')
         try{
             const response =await fetch("/api/file/upload",{method:"POST",body:formData});
             if(!response.ok) throw new Error("Reponse was not ok ");
@@ -33,8 +34,12 @@ const handleSubmit = async (e: React.FormEvent) => {
             await fetch(uploadUrl,{method:"PUT",body:File});
             setUploading(false);
             router.push(`/files/${subjectid}`);
+            toast.success('File uploaded successfully');
             }catch(error){
             setUploading(false);
+            toast.error('Error uploading file');
+            }finally{
+              toast.dismiss(uploadtoast)
             }
 };
 
@@ -69,6 +74,7 @@ return (
           <BottomGradient />
         </button>
       </form>
+      <Toaster position="top-center"richColors />
     </div>
 )
 
