@@ -41,7 +41,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
           {subjects &&subjects.length > 0 ?( subjects.map(subject => (
             <div key={subject.id} className="col-span-1 md:col-span-1">
-              <Link href={`/files/${subject.id}`}>
+              <Link href={`/dashboard/files/${subject.id}`}>
               <BentoGrid className="max-w-4xl w-full md:auto-rows-[20rem]">
                 <BentoGridItem
                   title={subject.user.name}
@@ -73,7 +73,7 @@ export default function Dashboard() {
             </div>
           ))):(<div className="flex flex-col items-center p-4">
             <p className="text-gray-600 mb-4">No subjects available.</p>
-            <Link href="/createsubject">
+            <Link href="/dashboard/createsubject">
               <div className="px-6 py-2 bg-black text-white rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
                 Create New Subject
               </div>

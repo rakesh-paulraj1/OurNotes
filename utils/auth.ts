@@ -15,13 +15,13 @@ export const authentication={
                 }
             }
         })
-    ],secret:process.env.NEXT_SECRET||'',
+    ],secret:process.env.NEXTAUTH_SECRET||'',
     callbacks:{
         jwt: async ({ user, token }: any) => {
+          console.log(token);
             if (user) {
                 token.uid = user.id;
             }
-           
             return token;
         },
         session: async({ session, token, }: any) => {
@@ -41,7 +41,6 @@ export const authentication={
               
               localStorage.setItem('userId', existinguser.id.toString());
             }
-           
           }
 
             if (!existinguser) {

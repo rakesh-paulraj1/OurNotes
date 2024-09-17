@@ -15,13 +15,13 @@ export default function Allsubjects(){
   toast.success('Logged in successfully');
  }
   const getallsubjects = async () => {
-    const response = await fetch("api/subject/getallsubjects", { method: "GET" });
+    const response = await fetch("/api/subject/getallsubjects", { method: "GET" });
     const data = await response.json();
     setSubjects(data.subject);
   }
   useEffect(()=>{
     getallsubjects();
-  },[session]);
+  },[]);
  
  
   const variants = {
@@ -46,7 +46,7 @@ export default function Allsubjects(){
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
         {subjects && subjects.map(subject => (
           <div key={subject.id} className="col-span-1 md:col-span-1">
-            <Link href={`/files/${subject.id}`}>
+            <Link href={`/dashboard/files/${subject.id}`}>
             <BentoGrid className="max-w-4xl w-full md:auto-rows-[20rem]">
               <BentoGridItem
                 title={subject.user.name}

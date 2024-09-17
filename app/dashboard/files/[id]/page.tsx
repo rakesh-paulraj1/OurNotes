@@ -46,7 +46,7 @@ const fileuserid=files[0].userid;
         <div>
       
         <div className="absolute bottom-6 right-6 flex items-center space-x-2">
-       <Link href={`/files/newfile/${id}`}>
+       <Link href={`/dashboard/files/newfile/${id}`}>
         <label  className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer shadow-md hover:bg-gray-1000">
             Upload File
         </label>

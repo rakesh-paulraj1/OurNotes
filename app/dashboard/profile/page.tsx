@@ -69,7 +69,7 @@ const Profile = () => {
     {subjects && subjects.length > 0 ? (
       subjects.map((subject: Subject) => (
         <div key={subject.id} className="col-span-1 md:col-span-1">
-          <Link href={`/files/${subject.id}`}>
+          <Link href={`/dashboard/files/${subject.id}`}>
             <div>
               <BentoGrid className="max-w-4xl w-full md:auto-rows-[20rem]">
                 <BentoGridItem
@@ -113,7 +113,7 @@ const Profile = () => {
     ) : (
       <div className="flex flex-col items-center p-4">
         <p className="text-gray-600 mb-4">No subjects available.</p>
-        <Link href="/add-subject">
+        <Link href="/dashboard/add-subject">
           <div className="px-6 py-2 bg-black text-white rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
             Add New Subject
           </div>

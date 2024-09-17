@@ -34,35 +34,35 @@ export default function Layout({
   const links = [
     {
       label: "Your Subjects",
-      href: "/yoursubjects",
+      href: "/dashboard/yoursubjects",
       icon: (
         <IconFile className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Create Subject",
-      href: "/createsubject",
+      href: "/dashboard/createsubject",
       icon: (
         <IconFilePencil className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Explore Subjects",
-      href: "/explore",
+      href: "/dashboard/explore",
       icon: (
         <IconSearch className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Chat with Pdf",
-      href: "/chatwithpdf",
+      href: "/dashboard/chatwithpdf",
       icon: (
         <IconFileTextAi className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Profile",
-      href: "/profile",
+      href: "/dashboard/profile",
       icon: (
         <IconUser className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -124,7 +124,7 @@ export default function Layout({
               <SidebarLink
                 link={{
                   label: session?.user?.name ?? "",
-                  href: "/profile",
+                  href: "/dashboard/profile",
                   icon: (
                     <Image
                       src={session?.user?.image ?? ""}

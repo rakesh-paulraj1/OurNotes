@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 const  Homepage =  () => {
   const { data: session } = useSession();
   if(session){
-    redirect('/explore');
+    redirect('/dashboard/explore');
   }
   return (<div className="text text-1xl pt-16 bg-slate-950">
     <LampContainer>
